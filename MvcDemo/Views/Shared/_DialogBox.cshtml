@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+<script src="@Url.Content("~/Scripts/jquery.dialogbox/jquery.dialogbox.custom.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Use unique control Id
+        var dialogBox = $("#dialogBox_" + @ViewBag.SectionToDisplayId);
+        SetDialog(dialogBox);
+    });
+</script>
+@if (ViewBag.ErrorMessage != null)
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var dialogBox = $("#dialogBox_" + @ViewBag.SectionToDisplayId);
+            ShowDialog(dialogBox, "Error", "@ViewBag.ErrorMessage");
+        });
+    </script>
+}
+@{ string dialogBoxControlId = string.Format("dialogBox_{0}", ViewBag.SectionToDisplayId); }
+<div id="@dialogBoxControlId">
+</div>
+
+

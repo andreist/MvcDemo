@@ -1,0 +1,94 @@
+﻿@model IEnumerable<MvcDemo.PersonModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="@Url.Content("~/Content/jqGrid/ui.jqgrid.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/jqGrid/jqgrid.custom.css")" rel="Stylesheet" type="text/css" />
+@*Must load language tag BEFORE script tag*@
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqGrid/i18n/grid.locale-en.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqGrid/jquery.jqGrid.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqGrid/jqGrid.custom.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Use unique control Ids
+        var pagerControlId = "#pager_" + @ViewBag.SectionToDisplayId;
+        var gridContainer = $("#gridContainer_" + @ViewBag.SectionToDisplayId);
+        var grid = $("#grid_" + @ViewBag.SectionToDisplayId);
+
+        // Action links
+        var addNewRowAction = '@Url.Action("AddNewRow")';
+        var editRowAction = '@Html.Raw(Url.Action("EditRow", new { Id = "0" }))';
+
+        // Add dialogBox partial view to display messages
+        var dialogBox = $("#dialogBox_" + @ViewBag.SectionToDisplayId);
+
+        var columnGridSettings = {
+            url: '@Url.Action("BindData")',
+            editurl: '@Url.Action("UpdateData")',
+            datatype: 'json',
+            colNames: ['Id', 'FirstName', 'LastName', 'Age'],
+            colModel: [
+                { name: 'ID', index: 'ID', key: true, hidden: true, sortable: false, search: false, editable: false },
+                {
+                    name: 'FirstName',
+                    index: 'FirstName',
+                    width: 300,
+                    searchoptions: {
+                        sopt: ['cn', 'nc', 'bw', 'bn', 'eq', 'ne', 'ew', 'en'],
+                        dataInit: function(elem) {
+                            $(elem).autocomplete({ source: '@Url.Action("GetFirstNames")', minLength: 2 });
+                        }
+                    },
+                    editable: false
+                },
+                {
+                    name: 'LastName',
+                    index: 'LastName',
+                    width: 300,
+                    searchoptions: {
+                        sopt: ['cn', 'nc', 'bw', 'bn', 'eq', 'ne', 'ew', 'en'],
+                        dataInit: function(elem) {
+                            $(elem).autocomplete({ source: '@Url.Action("GetLastNames")', minLength: 2 });
+                        }
+                    },
+                    editable: false
+                },
+                { name: 'Age', index: 'Age', width: 80, editable: false, sortable: true, search: false, align: "right" }
+            ],
+            pager: pagerControlId,
+            postData: { filters: '@Html.Raw(ViewBag.Filters)' },
+            search: @ViewBag.Search,
+            sortname: '@ViewBag.Sortname', //sidx
+            sortorder: '@ViewBag.Sortorder', //sord
+            page: @ViewBag.Page, //page
+            rowNum: @ViewBag.RowNum //rows
+            };
+
+        var specificGridSettings = {
+            caption: 'Person'
+        };
+
+        grid.jqGrid($.extend({},
+            columnGridSettings,
+            SetCommonGridSettings(),
+            specificGridSettings));
+
+        SetGridFilterToolbar(grid);
+        SetGridNavGrid(grid, pagerControlId);
+        SetGridNavButtonAdd(grid, pagerControlId, dialogBox, addNewRowAction, editRowAction);
+        AutoResizeGrid(grid, gridContainer);
+    });
+</script>
+<h2>Person Index</h2>
+@{
+    string gridContainerControlId = "gridContainer_" + ViewBag.SectionToDisplayId;
+    string gridControlId = "grid_" + ViewBag.SectionToDisplayId;
+    string pagerControlId = "pager_" + ViewBag.SectionToDisplayId;
+}
+<div id="@gridContainerControlId">
+    <table id="@gridControlId"></table>
+    <div id="@pagerControlId">
+    </div>
+</div>
+@Html.Partial("_DialogBox")

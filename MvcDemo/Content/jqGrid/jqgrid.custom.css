@@ -1,0 +1,19 @@
+.ui-autocomplete
+{
+    /* for IE6 which not support max-height it can be width: 350px; */
+    max-height: 300px;
+    overflow-y: auto; /* prevent horizontal scrollbar */
+    overflow-x: hidden; /* add padding to account for vertical scrollbar */
+}
+.ui-autocomplete.ui-menu .ui-menu-item
+{
+    font-size: 11px;
+}
+.ui-jqgrid-pager .navtable .ui-pg-button .ui-pg-button-text
+{
+    padding-right: 3px;
+}
+.ui-widget
+{
+    font-size: 11px;
+}
