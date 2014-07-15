@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using System.Linq.Expressions;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
+using MvcDemo.DAL.Repository;
 
 
 namespace MvcDemo.DAL
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         internal MvcDemoEntities Context;
         internal DbSet<TEntity> ObjectSet;
@@ -20,7 +19,7 @@ namespace MvcDemo.DAL
             ObjectSet = Context.Set<TEntity>();
         }
 
-        public virtual IQueryable<TEntity> GetIQueryable()
+        internal virtual IQueryable<TEntity> GetIQueryable()
         {
             IQueryable<TEntity> query = ObjectSet;
             return query;

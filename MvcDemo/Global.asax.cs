@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Text.RegularExpressions;
-
+using MvcDemo.App_Start;
 using NLog;
 using MvcDemo.BLL;
 
@@ -36,6 +36,7 @@ namespace MvcDemo
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutoMapperConfig.Init();
         }
 
         private void Application_BeginRequest(Object sender, EventArgs e)
@@ -43,6 +44,7 @@ namespace MvcDemo
             if (!IsMediaRequest())
             {
                 UnitOfWorkBl.InitUow();
+
 
                 string message = String.Format("Starting a new httprequest - RequestUrl = {0} ", HttpContext.Current.Request.Url);
                 _logger.Log(LogLevel.Info, message);

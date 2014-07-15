@@ -4,7 +4,7 @@ using NLog;
 
 namespace MvcDemo.DAL
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IDisposable, IUnitOfWorks
     {
         #region Constructors
 

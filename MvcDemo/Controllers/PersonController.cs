@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +6,7 @@ using System.Web.Script.Serialization;
 using System.Text;
 using System.Security.Cryptography;
 using System.Net;
+using AutoMapper;
 
 using MvcDemo.BLL;
 using MvcDemo.Common;
@@ -82,14 +81,7 @@ namespace MvcDemo.Controllers
                 IPersonBl personBl = new PersonBl();
                 PersonDto personDto = personBl.GetById(id);
 
-                PersonModel personModel = new PersonModel()
-                {
-                    Id = personDto.Id,
-                    FirstName = personDto.FirstName,
-                    LastName = personDto.LastName,
-                    Age = personDto.Age,
-                    Sex = personDto.Sex
-                };
+                PersonModel personModel = Mapper.Map<PersonModel>(personDto);
 
                 if (personModel != null)
                     return View(personModel);
@@ -108,14 +100,7 @@ namespace MvcDemo.Controllers
                 {
                     IPersonBl personBl = new PersonBl();
 
-                    PersonDto personDto = new PersonDto
-                    {
-                        Id = personModel.Id,
-                        FirstName = personModel.FirstName,
-                        LastName = personModel.LastName,
-                        Age = personModel.Age,
-                        Sex = personModel.Sex
-                    };
+                    PersonDto personDto = Mapper.Map<PersonDto>(personModel);
 
                     if (personModel.Id == 0)
                         personBl.Insert(personDto);

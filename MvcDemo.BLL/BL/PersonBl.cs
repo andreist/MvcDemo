@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using MvcDemo.DAL;
 using MvcDemo.Common;
 using System.Collections;
@@ -11,27 +12,13 @@ namespace MvcDemo.BLL
     {
         internal PersonDto FromEntityToModel(Person person)
         {
-            PersonDto personDto = new PersonDto()
-            {
-                Id = person.Id,
-                FirstName = person.FirstName,
-                LastName = person.LastName,
-                Age = person.Age,
-                Sex = person.Sex
-            };
+            var personDto = Mapper.Map<PersonDto>(person);
             return personDto;
         }
 
         internal Person FromModelToEntity(PersonDto personDto)
         {
-            Person person = new Person()
-            {
-                Id = personDto.Id,
-                FirstName = personDto.FirstName,
-                LastName = personDto.LastName,
-                Age = personDto.Age,
-                Sex = personDto.Sex
-            };
+            var person = Mapper.Map<Person>(personDto);
             return person;
         }
 
