@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using System.Linq.Expressions;
+using System.Data.Entity.Core.Objects;
+using System.Web.Script.Serialization;
+
 using MvcDemo.DAL.Repository;
+using MvcDemo.Common;
+
 
 
 namespace MvcDemo.DAL
@@ -52,6 +57,33 @@ namespace MvcDemo.DAL
                 return orderBy(query).ToList();
             }
             return query.ToList();
+        }
+
+        /// <summary>
+        /// Get a CustomDataSource: filtered, ordered
+        /// ex: secondFilter = "it.SectionID = @SectionId"
+        /// </summary>
+        public CustomDataSource<TEntity> BindData(string sidx, string sord, int page, int rows, bool search, string filters, string secondFilter)
+        {
+            var serializer = new JavaScriptSerializer();
+            var filtersTemp = (!search || string.IsNullOrEmpty(filters)) ? null : serializer.Deserialize<Filters>(filters);
+
+            ObjectContext objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter)Context).ObjectContext;
+            ObjectSet<TEntity> objectSet = objectContext.CreateObjectSet<TEntity>();
+
+            ObjectQuery<TEntity> filteredQuery = filtersTemp == null ? objectSet : filtersTemp.FilterObjectSet(objectSet);
+
+            filteredQuery.MergeOption = MergeOption.NoTracking; // we don't want to update the data
+
+            if (!string.IsNullOrEmpty(secondFilter))
+                filteredQuery = filteredQuery.Where(secondFilter);
+
+            var totalRecords = filteredQuery.Count();
+            var pagedQuery = filteredQuery.Skip("it." + sidx + " " + sord, "@skip", new ObjectParameter("skip", (page - 1) * rows))
+                                          .Top("@limit", new ObjectParameter("limit", rows));
+
+            var customDataSource = new CustomDataSource<TEntity>(pagedQuery.ToList(), totalRecords);
+            return customDataSource;
         }
 
         public virtual void Insert(TEntity entity)

@@ -1,10 +1,5 @@
-﻿using System.Data.Entity.Core.Objects;
-using System.Linq;
-using System.Web.Script.Serialization;
-
-using MvcDemo.Common;
+﻿using System.Linq;
 using System.Collections;
-using MvcDemo.DAL.Repository;
 
 namespace MvcDemo.DAL
 {
@@ -41,27 +36,5 @@ namespace MvcDemo.DAL
             if (item != null)
                 Delete(item);
         }
-
-        public CustomDataSource<Person> BindData(string sidx, string sord, int page, int rows, bool search, string filters)
-        {
-            var serializer = new JavaScriptSerializer();
-            var filtersTemp = (!search || string.IsNullOrEmpty(filters)) ? null : serializer.Deserialize<Filters>(filters);
-
-            ObjectContext objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter)Context).ObjectContext;
-            ObjectSet<Person> objectSet = objectContext.CreateObjectSet<Person>();
-
-            ObjectQuery<Person> filteredQuery = filtersTemp == null ? objectSet : filtersTemp.FilterObjectSet(objectSet);
-
-            filteredQuery.MergeOption = MergeOption.NoTracking; // we don't want to update the data
-
-            var totalRecords = filteredQuery.Count();
-            var pagedQuery = filteredQuery.Skip("it." + sidx + " " + sord, "@skip", new ObjectParameter("skip", (page - 1) * rows))
-                                          .Top("@limit", new ObjectParameter("limit", rows));
-
-            var customDataSource = new CustomDataSource<Person>(pagedQuery.ToList(), totalRecords);
-            return customDataSource;
-        }
-
-
     }
 }
