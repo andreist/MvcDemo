@@ -15,6 +15,8 @@ namespace MvcDemo.Controllers
 {
     public class PersonController : BaseController
     {
+        protected readonly IPersonBl personBl = new PersonBl();
+
         public ActionResult Index()
         {
             LoadSettings();
@@ -29,9 +31,6 @@ namespace MvcDemo.Controllers
 
             Response.Cache.SetCacheability(HttpCacheability.ServerAndPrivate);
             Response.Cache.SetMaxAge(new TimeSpan(0));
-
-            // TO DO - Implement a global initialisation
-            IPersonBl personBl = new PersonBl();
 
             CustomDataSource<PersonDto> dataSource = personBl.BindData(sidx, sord, page, rows, search, filters);
 
@@ -78,9 +77,7 @@ namespace MvcDemo.Controllers
         {
             if (id != 0)
             {
-                IPersonBl personBl = new PersonBl();
                 PersonDto personDto = personBl.GetById(id);
-
                 PersonModel personModel = Mapper.Map<PersonModel>(personDto);
 
                 if (personModel != null)
@@ -98,8 +95,6 @@ namespace MvcDemo.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    IPersonBl personBl = new PersonBl();
-
                     PersonDto personDto = Mapper.Map<PersonDto>(personModel);
 
                     if (personModel.Id == 0)
@@ -108,13 +103,8 @@ namespace MvcDemo.Controllers
                         personBl.Update(personDto);
 
                     UnitOfWorkBl.Save();
-
-                    return null;
                 }
-                else
-                {
-                    return View(personModel);
-                }
+                return View(personModel);
             }
             catch (Exception ex)
             {
@@ -126,10 +116,9 @@ namespace MvcDemo.Controllers
         {
             if (String.Compare(oper, "del", StringComparison.Ordinal) == 0)
             {
-                int iOut = 0;
+                int iOut;
                 if (int.TryParse(id, out iOut))
                 {
-                    IPersonBl personBl = new PersonBl();
                     personBl.DeleteById(iOut);
 
                     UnitOfWorkBl.Save();
@@ -158,7 +147,6 @@ namespace MvcDemo.Controllers
         {
             Response.Cache.SetMaxAge(new TimeSpan(0));
 
-            IPersonBl personBl = new PersonBl();
             return Json(personBl.GetIListWithFirstNames(term),
                         JsonRequestBehavior.AllowGet);
         }
@@ -167,7 +155,6 @@ namespace MvcDemo.Controllers
         {
             Response.Cache.SetMaxAge(new TimeSpan(0));
 
-            IPersonBl personBl = new PersonBl();
             return Json(personBl.GetIListWithLastNames(term),
                         JsonRequestBehavior.AllowGet);
         }
@@ -205,7 +192,7 @@ namespace MvcDemo.Controllers
             get
             {
                 // Try to get the object from session
-                BindDataParamDto bindDataParam = GetExtraState<BindDataParamDto>(BindDataParamExtraStateKey);
+                var bindDataParam = GetExtraState<BindDataParamDto>(BindDataParamExtraStateKey);
                 if (bindDataParam == default(BindDataParamDto))
                 {
                     // Save the object in session with default values

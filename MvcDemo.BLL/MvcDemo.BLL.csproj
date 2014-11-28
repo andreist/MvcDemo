@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\GenericBl.cs" />
     <Compile Include="DtoMappers.cs" />
     <Compile Include="BL\PersonBl.cs" />
     <Compile Include="DTO\PersonDto.cs" />

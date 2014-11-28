@@ -4,7 +4,7 @@ using NLog;
 
 namespace MvcDemo.DAL
 {
-    public class UnitOfWork : IDisposable, IUnitOfWorks
+    public class UnitOfWork : IDisposable, IUnitOfWork
     {
         #region Constructors
 
@@ -132,8 +132,8 @@ namespace MvcDemo.DAL
 
         #region Repositories
 
-        private PersonRepository _personRepository;
-        public PersonRepository PersonRepository
+        private IPersonRepository _personRepository;
+        public IPersonRepository PersonRepository
         {
             get
             {

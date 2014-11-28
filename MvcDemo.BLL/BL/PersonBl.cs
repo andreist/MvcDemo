@@ -1,14 +1,20 @@
 ﻿using System.Linq;
+using System.Collections;
+
 using AutoMapper;
 using MvcDemo.DAL;
 using MvcDemo.Common;
-using System.Collections;
 
 
 namespace MvcDemo.BLL
 {
-    public class PersonBl : IPersonBl
+    public class PersonBl : GenericBl, IPersonBl
     {
+        public PersonBl() { }
+
+        public PersonBl(IUnitOfWork uow) : base(uow){ }
+
+
         internal PersonDto FromEntityToModel(Person person)
         {
             var personDto = Mapper.Map<PersonDto>(person);
@@ -23,7 +29,7 @@ namespace MvcDemo.BLL
 
         public PersonDto GetById(int id)
         {
-            Person preson = UnitOfWork.Current.PersonRepository.GetById(id);
+            Person preson = Uow.PersonRepository.GetById(id);
             if (preson != null)
                 return FromEntityToModel(preson);
             return new PersonDto();
@@ -32,7 +38,7 @@ namespace MvcDemo.BLL
 
         public CustomDataSource<PersonDto> BindData(string sidx, string sord, int page, int rows, bool search, string filters)
         {
-            CustomDataSource<Person> personList = UnitOfWork.Current.PersonRepository.BindData(sidx, sord, page, rows, search, filters);
+            CustomDataSource<Person> personList = Uow.PersonRepository.BindData(sidx, sord, page, rows, search, filters);
             var customDataSource = new CustomDataSource<PersonDto>(personList.RecordList.Select(FromEntityToModel).ToList(),
                 personList.TotalRecords);
 
@@ -41,27 +47,27 @@ namespace MvcDemo.BLL
 
         public IList GetIListWithFirstNames(string firstNameContained)
         {
-            return UnitOfWork.Current.PersonRepository.GetIListWithFirstNames(firstNameContained);
+            return Uow.PersonRepository.GetIListWithFirstNames(firstNameContained);
         }
 
         public IList GetIListWithLastNames(string lastNameContained)
         {
-            return UnitOfWork.Current.PersonRepository.GetIListWithLastNames(lastNameContained);
+            return Uow.PersonRepository.GetIListWithLastNames(lastNameContained);
         }
 
         public void DeleteById(int id)
         {
-            UnitOfWork.Current.PersonRepository.DeleteById(id);
+            Uow.PersonRepository.DeleteById(id);
         }
 
         public void Insert(PersonDto personDto)
         {
-            UnitOfWork.Current.PersonRepository.Insert(FromModelToEntity(personDto));
+            Uow.PersonRepository.Insert(FromModelToEntity(personDto));
         }
 
         public void Update(PersonDto personDto)
         {
-            UnitOfWork.Current.PersonRepository.Update(FromModelToEntity(personDto));
+            Uow.PersonRepository.Update(FromModelToEntity(personDto));
         }
     }
 }

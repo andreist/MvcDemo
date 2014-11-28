@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using System.Data.Entity.Core.Objects;
 using System.Web.Script.Serialization;
 
-using MvcDemo.DAL.Repository;
 using MvcDemo.Common;
 
 
@@ -63,7 +62,7 @@ namespace MvcDemo.DAL
         /// Get a CustomDataSource: filtered, ordered
         /// ex: secondFilter = "it.SectionID = @SectionId"
         /// </summary>
-        public CustomDataSource<TEntity> BindData(string sidx, string sord, int page, int rows, bool search, string filters, string secondFilter)
+        public CustomDataSource<TEntity> BindData(string sidx, string sord, int page, int rows, bool search, string filters, string secondFilter = "")
         {
             var serializer = new JavaScriptSerializer();
             var filtersTemp = (!search || string.IsNullOrEmpty(filters)) ? null : serializer.Deserialize<Filters>(filters);

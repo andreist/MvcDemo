@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace MvcDemo.DAL
 {
-    public class PersonRepository : GenericRepository<Person>
+    public class PersonRepository : GenericRepository<Person>, IPersonRepository
     {
         public PersonRepository(MvcDemoEntities context)
             : base(context)

@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace MvcDemo.DAL.Repository
+using MvcDemo.Common;
+
+
+namespace MvcDemo.DAL
 {
     public interface IGenericRepository<TEntity> where TEntity: class
     {
@@ -11,6 +14,9 @@ namespace MvcDemo.DAL.Repository
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "");
+
+        CustomDataSource<TEntity> BindData(string sidx, string sord, int page, int rows, bool search, string filters,
+            string secondFilter = "");
 
         void Insert(TEntity entity);
 
