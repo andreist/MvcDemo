@@ -10,6 +10,8 @@
     <projectUrl>http://www.asp.net/web-pages</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>This package contains core runtime assemblies shared between ASP.NET MVC and ASP.NET Web Pages.</description>
+    <releaseNotes />
+    <copyright />
     <language>en-US</language>
     <tags>Microsoft AspNet WebPages AspNetWebPages</tags>
     <dependencies>

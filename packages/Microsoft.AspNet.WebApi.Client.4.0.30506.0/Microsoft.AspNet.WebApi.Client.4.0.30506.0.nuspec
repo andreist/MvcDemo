@@ -10,6 +10,8 @@
     <projectUrl>http://www.asp.net/web-api</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>This package adds support for formatting and content negotiation to System.Net.Http. It includes support for JSON, XML, and form URL encoded data.</description>
+    <releaseNotes />
+    <copyright />
     <language>en-US</language>
     <tags>Microsoft AspNet WebApi AspNetWebApi HttpClient</tags>
     <dependencies>

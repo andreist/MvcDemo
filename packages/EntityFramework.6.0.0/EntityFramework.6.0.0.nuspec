@@ -8,7 +8,8 @@
     <owners>Microsoft</owners>
     <licenseUrl>http://go.microsoft.com/fwlink/?LinkID=320539</licenseUrl>
     <projectUrl>http://go.microsoft.com/fwlink/?LinkID=320540</projectUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=386613</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Entity Framework is Microsoft's recommended data access technology for new applications.</description>
     <summary>Entity Framework is Microsoft's recommended data access technology for new applications.</summary>
     <language>en-US</language>
