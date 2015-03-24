@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<MvcDemo.PersonModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Person List View";
 }
-
 <link href="@Url.Content("~/Content/jqGrid/ui.jqgrid.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/jqGrid/jqgrid.custom.css")" rel="Stylesheet" type="text/css" />
 @*Must load language tag BEFORE script tag*@
@@ -80,15 +79,33 @@
         AutoResizeGrid(grid, gridContainer);
     });
 </script>
-<h2>Person Index</h2>
-@{
-    string gridContainerControlId = "gridContainer_" + ViewBag.SectionToDisplayId;
-    string gridControlId = "grid_" + ViewBag.SectionToDisplayId;
-    string pagerControlId = "pager_" + ViewBag.SectionToDisplayId;
-}
-<div id="@gridContainerControlId">
-    <table id="@gridControlId"></table>
-    <div id="@pagerControlId">
-    </div>
-</div>
 @Html.Partial("_DialogBox")
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+            <p>
+                JqGrid was used to display the Grid.
+            </p>
+        </div>
+    </section>
+}
+
+<section class="contact">
+    <header>
+        <h3>List:</h3>
+    </header>
+    @{
+        string gridContainerControlId = "gridContainer_" + ViewBag.SectionToDisplayId;
+        string gridControlId = "grid_" + ViewBag.SectionToDisplayId;
+        string pagerControlId = "pager_" + ViewBag.SectionToDisplayId;
+    }
+    <div id="@gridContainerControlId">
+        <table id="@gridControlId"></table>
+        <div id="@pagerControlId">
+        </div>
+    </div>
+</section>
