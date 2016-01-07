@@ -21,27 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EA2126
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://192.168.0.109:8080/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = MvcDemo.BLL\\MvcDemo.BLL.csproj
-		SccProjectName1 = MvcDemo.BLL
-		SccLocalPath1 = MvcDemo.BLL
-		SccProjectUniqueName2 = MvcDemo.Common\\MvcDemo.Common.csproj
-		SccProjectName2 = MvcDemo.Common
-		SccLocalPath2 = MvcDemo.Common
-		SccProjectUniqueName3 = MvcDemo.DAL\\MvcDemo.DAL.csproj
-		SccProjectName3 = MvcDemo.DAL
-		SccLocalPath3 = MvcDemo.DAL
-		SccProjectUniqueName4 = MvcDemo.Tests\\MvcDemo.Tests.csproj
-		SccProjectName4 = MvcDemo.Tests
-		SccLocalPath4 = MvcDemo.Tests
-		SccProjectUniqueName5 = MvcDemo\\MvcDemo.csproj
-		SccProjectName5 = MvcDemo
-		SccLocalPath5 = MvcDemo
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
